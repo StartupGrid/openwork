@@ -40,13 +40,20 @@ for line in sys.stdin:
     tweet = json.loads(line)
 
     # nullify mentions
-    tweet_text = tweet['text']
+    tweet['parsed'] = tweet['text']
     for mention in tweet['userMentionEntities']:
-        tweet_text = tweet_text.replace(mention['screenName'], '')
+        tweet['parsed'] = tweet['parsed'].replace(mention['screenName'], '')
 
+    # map key on 1st query term match
     for qry in qtokens:
         for qword in qtokens[qry]:
             #if regex.match(ur".*%s.*" % qword, tweet['text']):
-            if qword in tweet_text:
-                print qry + "\t" + tweet['text'].replace("\n", " ")
+            if qword in tweet['parsed']:
+                out = {
+                    'id': tweet['id'],
+                    'text': tweet['text'],
+                    'parsed': tweet['parsed'].replace("\n", ' '),
+                    'qlScore': tweet['qlScore']
+                }
+                print qry + "\t" + json.dumps(out)
                 break
