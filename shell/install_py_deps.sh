@@ -12,10 +12,10 @@ fi
 
 if (( `which yum >> /dev/null && echo $?` == 0  ))
 then
-   yum install gcc python-devel
+   yum -y install gcc python-devel
 elif (( `which apt-get >> /dev/null && echo $` == 0 ))
 then
-   apt-get install gcc python-setuptools
+   apt-get -y install gcc python-setuptools
 fi
 
 echo -e '\n'
