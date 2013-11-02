@@ -31,4 +31,5 @@ for line in sys.stdin:
     tweet['tokens'] = qtokens
     tweet['matches'] = matches
     tweet['cxScore'] = float(matches) / len(qtokens)
+    tweet['totScore'] = tweet['cxScore'] + tweet['qlScore']
     print tweet
