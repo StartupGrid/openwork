@@ -14,12 +14,15 @@ def remove_if_punct_or_stopword(w):
 
 current_key = None
 qtokens = None
+reduced_keys = {}
+
 for line in sys.stdin:
     query, tweet = line.split('\t', 1)
     if current_key != query:
         current_key = query
         qwords = WordPunctTokenizer().tokenize(query)
         qtokens = [w for w in qwords if not remove_if_punct_or_stopword(w)]
+        reduced_keys[query] = []
     tweet = json.loads(tweet)
 
     # match query terms into tweet
@@ -32,4 +35,8 @@ for line in sys.stdin:
     tweet['matches'] = matches
     tweet['cxScore'] = float(matches) / len(qtokens)
     tweet['totScore'] = tweet['cxScore'] + tweet['qlScore']
-    print tweet
+    reduced_keys[query].append(tweet)
+
+for key in reduced_keys:
+    sys.stdout.write(key + "\t")
+    print reduced_keys[key]
