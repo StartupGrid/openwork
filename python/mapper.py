@@ -42,5 +42,5 @@ for line in sys.stdin:
         for qword in qtokens[qry]:
             #if regex.match(ur".*%s.*" % qword, tweet['text']):
             if qword in tweet['text']:
-                print qry + "\t" + tweet['text']
+                print qry + "\t" + tweet['text'].replace("\n", " ")
                 break
