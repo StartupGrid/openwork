@@ -20,7 +20,7 @@ fi
 
 echo -e '\n'
 
-easy_install nltk
+easy_install nltk regex
 
 echo -e '\n'
 
