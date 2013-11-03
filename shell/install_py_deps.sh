@@ -15,6 +15,7 @@ then
    yum -y install gcc python-devel
 elif (( `which apt-get >> /dev/null && echo $?` == 0 ))
 then
+   apt-get update
    apt-get -y install gcc python-setuptools python-dev
 fi
 
