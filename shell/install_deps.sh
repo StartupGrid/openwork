@@ -10,19 +10,19 @@ then
    exit
 fi
 
-if (( `which yum >> /dev/null && echo $?` == 0  ))
+if (( `which yum >> /dev/null; echo $?` == 0  ))
 then
    yum -y install gcc python-devel
-elif (( `which apt-get >> /dev/null && echo $?` == 0 ))
+elif (( `which apt-get >> /dev/null; echo $?` == 0 ))
 then
    apt-get update
-   apt-get -y install gcc python-setuptools python-dev
+   apt-get -y install gcc python-setuptools python-dev python-software-properties
 
-   sudo add-apt-repository ppa:webupd8team/java
+   add-apt-repository -y ppa:webupd8team/java
    apt-get update
    echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-   apt-get install oracle-java7-installer
-   apt-get install oracle-java7-set-default
+   apt-get install -y oracle-java7-installer
+   apt-get install -y oracle-java7-set-default
 fi
 
 echo -e '\n'
