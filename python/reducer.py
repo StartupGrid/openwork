@@ -21,10 +21,14 @@ reduced_keys = {}
 for line in sys.stdin:
     query, tweet = line.split('\t', 1)
     if current_key != query:
+        for last_tweet in reduced_keys:
+            # TODO Reduce Processing Phase 2
+            # more processing against key's corpus
+            print json.dumps(last_tweet)
         current_key = query
         qwords = WordPunctTokenizer().tokenize(query)
         qtokens = [w for w in qwords if not remove_if_punct_or_stopword(w)]
-        reduced_keys[query] = []
+        reduced_keys = []
     tweet = json.loads(tweet)
 
     # match query terms into tweet
@@ -37,8 +41,6 @@ for line in sys.stdin:
     tweet['matches'] = matches
     tweet['cxScore'] = float(matches) / len(qtokens)
     tweet['totScore'] = tweet['cxScore'] + tweet['qlScore']
-    reduced_keys[query].append(tweet)
-
-for key in reduced_keys:
-    sys.stdout.write(key + "\t")
-    print reduced_keys[key]
+    # TODO Reduce Processing Phase 1
+    # collect stats into key mini-corpus
+    reduced_keys.append(tweet)
