@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-if [[ `whoami` != 'root' ]]
-then
-   echo 'Script must run as root.'
-   exit
-fi
+source functions.sh
+
+check_root
 
 ####
 # Installing package dependencies and Java
 ####
 
-if (( `which yum >> /dev/null; echo $?` == 0  ))
+package_manager = aptget_yum
+
+if (( package_manager == 'yum'  ))
 then
    # Python dependencies
    yum -y install gcc python-devel
@@ -18,7 +18,7 @@ then
    # Java JDK download and install
    curl -L -H "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com" -o jdk_7u45_x64.rpm "http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.rpm" 
    yum install jdk_7u45_x64.rpm
-elif (( `which apt-get >> /dev/null; echo $?` == 0 ))
+elif (( package_manager == 'apt_get ))
 then
    # Python dependencies 
    apt-get update
