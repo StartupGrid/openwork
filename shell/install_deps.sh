@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
 
 source functions.sh
-
 check_root
 
 ####
 # Installing package dependencies and Java
-####
-
 package_manager = aptget_yum
 
 if (( package_manager == 'yum'  ))
@@ -18,7 +15,7 @@ then
    # Java JDK download and install
    curl -L -H "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com" -o jdk_7u45_x64.rpm "http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.rpm" 
    yum install jdk_7u45_x64.rpm
-elif (( package_manager == 'apt_get ))
+elif (( package_manager == 'apt_get' ))
 then
    # Python dependencies 
    apt-get update
@@ -31,15 +28,12 @@ then
    apt-get install -y oracle-java7-installer
    apt-get install -y oracle-java7-set-default
 fi
+####
 
 echo -e '\n'
 
 ####
 # Install Python regex and NLTK + download data
-####
-
 easy_install nltk regex
-
-echo -e '\n'
-
 python -m nltk.downloader -d /usr/share/nltk_data stopwords
+####
